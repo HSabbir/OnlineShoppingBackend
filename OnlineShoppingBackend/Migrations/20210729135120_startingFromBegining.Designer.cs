@@ -10,8 +10,8 @@ using OnlineShoppingBackend.Data;
 namespace OnlineShoppingBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210712193155_updateUserAndOrder")]
-    partial class updateUserAndOrder
+    [Migration("20210729135120_startingFromBegining")]
+    partial class startingFromBegining
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace OnlineShoppingBackend.Migrations
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("OnlineShoppingBackend.Models.Order", b =>
+            modelBuilder.Entity("OnlineShoppingBackend.Models.Order2", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,6 +37,9 @@ namespace OnlineShoppingBackend.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
@@ -46,7 +49,7 @@ namespace OnlineShoppingBackend.Migrations
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -87,9 +90,6 @@ namespace OnlineShoppingBackend.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -99,6 +99,12 @@ namespace OnlineShoppingBackend.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Customer");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
@@ -107,11 +113,13 @@ namespace OnlineShoppingBackend.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("OnlineShoppingBackend.Models.Order", b =>
+            modelBuilder.Entity("OnlineShoppingBackend.Models.Order2", b =>
                 {
                     b.HasOne("OnlineShoppingBackend.Models.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

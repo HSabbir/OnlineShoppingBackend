@@ -24,7 +24,7 @@ namespace OnlineShoppingBackend.Controllers
         public async Task<IActionResult> Register(UserRegisterDto request)
         {
             ServiceResponse<int> response = await _authRepo.Register(
-                new User { UserName = request.UserName }, request.Password, request.Name
+                new User { UserName = request.UserName }, request.Password, request.Name, request.Role
             );
             if (!response.Success)
             {

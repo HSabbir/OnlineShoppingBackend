@@ -43,7 +43,7 @@ namespace OnlineShoppingBackend.Data
             return response;
         }
 
-        public async Task<ServiceResponse<int>> Register(User user, string password, string name)
+        public async Task<ServiceResponse<int>> Register(User user, string password, string name, string role)
         {
             ServiceResponse<int> response = new ServiceResponse<int>();
             if (await UserExists(user.UserName))
@@ -57,6 +57,7 @@ namespace OnlineShoppingBackend.Data
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             user.Name = name;
+            user.Role = role;
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
@@ -101,7 +102,8 @@ namespace OnlineShoppingBackend.Data
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName)
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             SymmetricSecurityKey key = new SymmetricSecurityKey(

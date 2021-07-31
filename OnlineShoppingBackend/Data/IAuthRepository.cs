@@ -8,7 +8,7 @@ namespace OnlineShoppingBackend.Data
 {
     public interface IAuthRepository
     {
-        Task<ServiceResponse<int>> Register(User user, string password, string name);
+        Task<ServiceResponse<int>> Register(User user, string password, string name, string role);
         Task<ServiceResponse<string>> Login(string username, string password);
         Task<bool> UserExists(string username);
     }

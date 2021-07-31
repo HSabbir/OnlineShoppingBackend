@@ -2,7 +2,7 @@
 
 namespace OnlineShoppingBackend.Migrations
 {
-    public partial class OrderAndUser2 : Migration
+    public partial class changeDataContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

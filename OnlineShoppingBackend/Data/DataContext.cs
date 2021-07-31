@@ -16,6 +16,12 @@ namespace OnlineShoppingBackend.Data
 
         public DbSet<Product> Product { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<Order2> Orders { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .Property(user => user.Role).HasDefaultValue("Customer");
+
+        }
     }
 }
